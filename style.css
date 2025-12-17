@@ -116,3 +116,95 @@ footer {
   opacity: 0.6;
   padding: 30px;
 }
+/* ============================= */
+/* MOBILE RESPONSIVE FIX */
+/* ============================= */
+
+@media (max-width: 768px) {
+
+  body {
+    padding: 0;
+  }
+
+  /* Welcome screen center */
+  #welcome {
+    padding: 20px;
+  }
+
+  .welcome-box {
+    width: 100%;
+    max-width: 360px;
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  .welcome-box h1 {
+    font-size: 22px;
+    line-height: 1.4;
+  }
+
+  .welcome-box p {
+    font-size: 14px;
+    opacity: 0.85;
+  }
+
+  /* Header */
+  header {
+    padding: 16px;
+    text-align: center;
+  }
+
+  /* Bottom navigation (mobile style) */
+  nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    display: flex;
+    justify-content: space-around;
+
+    background: rgba(2, 6, 23, 0.92);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.08);
+
+    padding: 10px;
+    z-index: 999;
+  }
+
+  nav button {
+    flex: 1;
+    margin: 0 4px;
+    font-size: 12px;
+    padding: 8px 6px;
+    border-radius: 8px;
+  }
+
+  /* Panels full width */
+  .panel {
+    margin: 16px 12px 90px;
+    padding: 18px;
+    border-radius: 14px;
+  }
+
+  /* Inputs & buttons */
+  input,
+  textarea {
+    font-size: 14px;
+  }
+
+  button {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Map height fix */
+  #map {
+    height: 260px;
+  }
+
+  /* Footer hide on mobile */
+  footer {
+    display: none;
+  }
+}
