@@ -1,10 +1,7 @@
-/* =========================
-   GLOBAL RESET & BASE
-========================= */
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
@@ -14,23 +11,15 @@ body {
   min-height: 100vh;
 }
 
-/* =========================
-   WELCOME OVERLAY
-========================= */
+/* WELCOME */
 #welcome {
   position: fixed;
   inset: 0;
-  z-index: 10000;
-
-  background: radial-gradient(
-    circle at center,
-    rgba(15, 23, 42, 0.97),
-    rgba(2, 6, 23, 0.99)
-  );
-
+  background: radial-gradient(circle, rgba(15,23,42,.98), rgba(2,6,23,.99));
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9999;
 }
 
 #welcome.hidden {
@@ -38,73 +27,40 @@ body {
 }
 
 .welcome-box {
-  width: 90%;
-  max-width: 420px;
-  text-align: center;
-
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(255,255,255,0.06);
+  background: rgba(15,23,42,.9);
+  padding: 40px 30px;
   border-radius: 20px;
-
-  padding: 36px 28px;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.6);
-}
-
-.welcome-box h1 {
-  font-size: 24px;
-  margin-bottom: 12px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,.6);
+  max-width: 420px;
 }
 
 .welcome-box span {
   color: #38bdf8;
 }
 
-.welcome-box p {
-  font-size: 14px;
-  opacity: 0.85;
-}
-
 .welcome-box button {
   margin-top: 24px;
-  padding: 14px 26px;
-  font-size: 15px;
-
-  border: none;
+  padding: 14px 28px;
   border-radius: 12px;
-  cursor: pointer;
-
+  border: none;
   background: #2563eb;
-  color: #ffffff;
+  color: white;
+  cursor: pointer;
 }
 
-/* =========================
-   PLATFORM LAYOUT
-========================= */
-#platform {
-  display: none;
-}
-
-#platform.active {
-  display: block;
-}
-
+/* HEADER */
 header {
   padding: 22px;
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-}
-
-header h2 {
-  font-size: 20px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
 
 .subtitle {
   font-size: 13px;
-  opacity: 0.7;
+  opacity: .7;
 }
 
-/* =========================
-   NAVIGATION
-========================= */
+/* NAV */
 nav {
   padding: 14px 20px;
   display: flex;
@@ -113,58 +69,40 @@ nav {
 }
 
 nav button {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(255,255,255,.08);
+  color: #e5e7eb;
   padding: 10px 18px;
   border-radius: 10px;
-
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.08);
-
-  color: #e5e7eb;
   cursor: pointer;
 }
 
-/* =========================
-   PANELS / CARDS
-========================= */
+/* PANELS */
 .panel {
   margin: 22px;
   padding: 26px;
-
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(15,23,42,.9);
   border-radius: 18px;
-  border: 1px solid rgba(255,255,255,0.05);
-
-  box-shadow: 0 25px 60px rgba(0,0,0,0.5);
+  box-shadow: 0 25px 60px rgba(0,0,0,.5);
 }
 
 .panel.hidden {
   display: none;
 }
 
-.panel h3 {
-  margin-bottom: 16px;
-}
-
-/* =========================
-   FORM ELEMENTS
-========================= */
 label {
   display: block;
   margin-top: 16px;
-  font-size: 14px;
 }
 
-input,
-textarea {
+input, textarea {
   width: 100%;
   margin-top: 8px;
   padding: 12px;
-
   background: #020617;
-  color: #e5e7eb;
-
-  border: 1px solid rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,.12);
   border-radius: 10px;
+  color: white;
 }
 
 textarea {
@@ -172,64 +110,47 @@ textarea {
 }
 
 button {
-  margin-top: 14px;
-  padding: 12px 18px;
-
+  margin-top: 12px;
+  padding: 10px 18px;
   border-radius: 10px;
   border: none;
-
   background: #38bdf8;
   color: #020617;
-
   cursor: pointer;
 }
 
-/* =========================
-   MAP
-========================= */
 #map {
   height: 360px;
   margin-top: 16px;
   border-radius: 16px;
 }
 
-/* =========================
-   FOOTER
-========================= */
 footer {
   text-align: center;
-  opacity: 0.6;
+  opacity: .6;
   padding: 26px;
 }
 
-/* =========================
-   MOBILE FIXES
-========================= */
+/* MOBILE */
 @media (max-width: 768px) {
-
   nav {
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-
-    background: rgba(2,6,23,0.95);
-    backdrop-filter: blur(10px);
-
-    border-top: 1px solid rgba(255,255,255,0.08);
+    background: rgba(2,6,23,.95);
     justify-content: space-around;
+    border-top: 1px solid rgba(255,255,255,.08);
     z-index: 999;
   }
 
   nav button {
-    flex: 1;
-    padding: 8px 6px;
     font-size: 12px;
+    padding: 8px 6px;
   }
 
   .panel {
     margin: 16px 12px 90px;
-    padding: 20px;
   }
 
   footer {
@@ -239,4 +160,4 @@ footer {
   #map {
     height: 260px;
   }
-}
+   }
