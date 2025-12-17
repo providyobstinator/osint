@@ -1,108 +1,80 @@
-let map, marker;
+ let map, marker;
+let caseData = { correlations: [], timeline: [], evidence: [] };
 
-/* START */
-function startPlatform() {
+function startApp() {
   document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("platform").style.display = "block";
+  document.getElementById("app").style.display = "block";
   initMap();
 }
 
-/* NAV */
-function showSection(id) {
+function show(id) {
   document.querySelectorAll(".panel").forEach(p => p.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
 
+function add(type, value) {
+  caseData.correlations.push(`${type}: ${value}`);
+  correlation.textContent = caseData.correlations.join("\n");
+}
+
 /* OSINT */
-function usernameOSINT() {
-  const u = username.value;
-  if (!u) return;
-  window.open(`https://www.google.com/search?q="${u}"`);
-  window.open(`https://github.com/${u}`);
-  window.open(`https://twitter.com/${u}`);
-  window.open(`https://reddit.com/user/${u}`);
+function usernameOSINT(){ if(username.value) add("Username", username.value); }
+function emailOSINT(){ if(email.value) add("Email", email.value); }
+function domainOSINT(){ if(domain.value) add("Domain", domain.value); }
+function ipOSINT(){ if(ip.value) add("IP", ip.value); }
+function imageOSINT(){ window.open(`https://images.google.com/searchbyimage?image_url=${image.value}`); }
+function vinOSINT(){ window.open(`https://vpic.nhtsa.dot.gov/decoder/Decoder?VIN=${vin.value}`); }
+function phoneOSINT(){ window.open(`https://www.google.com/search?q="${phone.value}"`); }
+function companyOSINT(){ window.open(`https://www.google.com/search?q="${company.value} company"`); }
+function flightOSINT(){ window.open(`https://www.flightradar24.com/${flight.value}`); }
+function shipOSINT(){ window.open(`https://www.marinetraffic.com/en/search?keyword=${ship.value}`); }
+function personOSINT(){ window.open(`https://www.google.com/search?q="${person.value}"`); }
+
+/* CASE */
+function newCase() {
+  caseData = { correlations: [], timeline: [], evidence: [] };
+  correlation.textContent = timeline.textContent = evidenceList.textContent = "";
 }
 
-function emailOSINT() {
-  const e = email.value;
-  if (!e) return;
-  window.open(`https://www.google.com/search?q="${e}"`);
-  window.open(`https://haveibeenpwned.com/`);
+function addEvent() {
+  caseData.timeline.push(`${new Date().toLocaleDateString()} | ${event.value} | ${eventSource.value}`);
+  timeline.textContent = caseData.timeline.join("\n");
 }
 
-function domainOSINT() {
-  const d = domain.value;
-  if (!d) return;
-  window.open(`https://who.is/whois/${d}`);
-  window.open(`https://dnsdumpster.com/`);
-  window.open(`https://web.archive.org/${d}`);
-}
-
-function ipOSINT() {
-  const i = ip.value;
-  if (!i) return;
-  window.open(`https://ipinfo.io/${i}`);
-}
-
-function imageOSINT() {
-  const img = imageUrl.value;
-  if (!img) return;
-  window.open(`https://images.google.com/searchbyimage?image_url=${img}`);
-  window.open(`https://yandex.com/images/search?rpt=imageview&url=${img}`);
+function addEvidence() {
+  caseData.evidence.push(evidence.value);
+  evidenceList.textContent = caseData.evidence.join("\n");
 }
 
 /* MAP */
 function initMap() {
-  map = L.map("map").setView([20, 0], 2);
+  map = L.map("map").setView([20,0],2);
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 }
 
 async function locateIP() {
-  const ip = geoIP.value;
-  if (!ip) return;
-
-  const res = await fetch(`https://ipapi.co/${ip}/json/`);
-  const data = await res.json();
-
-  if (!data.latitude) return alert("Invalid IP");
-
-  if (marker) map.removeLayer(marker);
-
-  marker = L.marker([data.latitude, data.longitude])
-    .addTo(map)
-    .bindPopup(`${data.city}, ${data.country_name}`)
-    .openPopup();
-
-  map.setView([data.latitude, data.longitude], 6);
-}
-
-/* SECURITY */
-document.addEventListener("input", e => {
-  if (e.target.id !== "password") return;
-  const v = e.target.value;
-  let s = 0;
-  if (v.length >= 8) s++;
-  if (/[A-Z]/.test(v)) s++;
-  if (/[0-9]/.test(v)) s++;
-  passResult.textContent = s <= 1 ? "Weak" : s === 2 ? "Moderate" : "Strong";
-});
-
-function browserCheck() {
-  browserResult.textContent =
-`HTTPS: ${location.protocol === "https:"}
-Cookies Enabled: ${navigator.cookieEnabled}
-User Agent: ${navigator.userAgent}`;
+  const res = await fetch(`https://ipapi.co/${geoIP.value}/json/`);
+  const d = await res.json();
+  if (!d.latitude) return;
+  if(marker) map.removeLayer(marker);
+  marker = L.marker([d.latitude,d.longitude]).addTo(map);
+  map.setView([d.latitude,d.longitude],6);
 }
 
 /* REPORT */
 function generateReport() {
   finalReport.textContent =
-`CASE ID: ${caseId.value}
+`CASE REPORT
 
-FINDINGS:
-${notes.value}
+CORRELATION:
+${caseData.correlations.join("\n")}
 
-NOTE:
-All analysis is based on publicly available data.
-No unauthorized access performed.`;
-}   
+TIMELINE:
+${caseData.timeline.join("\n")}
+
+EVIDENCE:
+${caseData.evidence.join("\n")}
+
+DISCLAIMER:
+Public data only.`;
+}
