@@ -1,82 +1,70 @@
-let map;
-let marker;
+let map, marker;
 
-/* =========================
-   PLATFORM START
-========================= */
+/* START */
 function startPlatform() {
   document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("platform").classList.add("active");
+  document.getElementById("platform").style.display = "block";
   initMap();
 }
 
-/* =========================
-   SECTION SWITCHING
-========================= */
+/* NAV */
 function showSection(id) {
-  document.querySelectorAll(".panel").forEach(p => {
-    p.classList.add("hidden");
-  });
+  document.querySelectorAll(".panel").forEach(p => p.classList.add("hidden"));
   document.getElementById(id).classList.remove("hidden");
 }
 
-/* =========================
-   OSINT FUNCTIONS
-========================= */
+/* OSINT */
 function usernameOSINT() {
-  const u = document.getElementById("username").value;
+  const u = username.value;
   if (!u) return;
-
   window.open(`https://www.google.com/search?q="${u}"`);
   window.open(`https://github.com/${u}`);
   window.open(`https://twitter.com/${u}`);
+  window.open(`https://reddit.com/user/${u}`);
 }
 
 function emailOSINT() {
-  const e = document.getElementById("email").value;
+  const e = email.value;
   if (!e) return;
-
   window.open(`https://www.google.com/search?q="${e}"`);
   window.open(`https://haveibeenpwned.com/`);
 }
 
 function domainOSINT() {
-  const d = document.getElementById("domain").value;
+  const d = domain.value;
   if (!d) return;
-
   window.open(`https://who.is/whois/${d}`);
   window.open(`https://dnsdumpster.com/`);
+  window.open(`https://web.archive.org/${d}`);
 }
 
 function ipOSINT() {
-  const i = document.getElementById("ip").value;
+  const i = ip.value;
   if (!i) return;
-
   window.open(`https://ipinfo.io/${i}`);
 }
 
-/* =========================
-   MAP OSINT
-========================= */
+function imageOSINT() {
+  const img = imageUrl.value;
+  if (!img) return;
+  window.open(`https://images.google.com/searchbyimage?image_url=${img}`);
+  window.open(`https://yandex.com/images/search?rpt=imageview&url=${img}`);
+}
+
+/* MAP */
 function initMap() {
   map = L.map("map").setView([20, 0], 2);
-
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-    attribution: "© OpenStreetMap"
-  }).addTo(map);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 }
 
 async function locateIP() {
-  const ip = document.getElementById("geoIP").value;
+  const ip = geoIP.value;
   if (!ip) return;
 
   const res = await fetch(`https://ipapi.co/${ip}/json/`);
   const data = await res.json();
 
-  if (!data.latitude) {
-    alert("Invalid IP");
-    return;
-  }
+  if (!data.latitude) return alert("Invalid IP");
 
   if (marker) map.removeLayer(marker);
 
@@ -88,48 +76,33 @@ async function locateIP() {
   map.setView([data.latitude, data.longitude], 6);
 }
 
-/* =========================
-   SECURITY
-========================= */
-document.addEventListener("input", (e) => {
+/* SECURITY */
+document.addEventListener("input", e => {
   if (e.target.id !== "password") return;
-
   const v = e.target.value;
-  let score = 0;
-
-  if (v.length >= 8) score++;
-  if (/[A-Z]/.test(v)) score++;
-  if (/[0-9]/.test(v)) score++;
-
-  const out = document.getElementById("passResult");
-
-  out.textContent =
-    score <= 1 ? "Weak" :
-    score === 2 ? "Moderate" :
-    "Strong";
+  let s = 0;
+  if (v.length >= 8) s++;
+  if (/[A-Z]/.test(v)) s++;
+  if (/[0-9]/.test(v)) s++;
+  passResult.textContent = s <= 1 ? "Weak" : s === 2 ? "Moderate" : "Strong";
 });
 
 function browserCheck() {
-  document.getElementById("browserResult").textContent =
+  browserResult.textContent =
 `HTTPS: ${location.protocol === "https:"}
 Cookies Enabled: ${navigator.cookieEnabled}
 User Agent: ${navigator.userAgent}`;
 }
 
-/* =========================
-   REPORTING
-========================= */
+/* REPORT */
 function generateReport() {
-  const id = document.getElementById("caseId").value;
-  const notes = document.getElementById("notes").value;
-
-  document.getElementById("finalReport").textContent =
-`CASE ID: ${id}
+  finalReport.textContent =
+`CASE ID: ${caseId.value}
 
 FINDINGS:
-${notes}
+${notes.value}
 
-DISCLAIMER:
-All analysis based on publicly available information.
-No intrusion or unauthorized access performed.`;
-}
+NOTE:
+All analysis is based on publicly available data.
+No unauthorized access performed.`;
+}   
