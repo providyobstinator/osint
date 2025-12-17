@@ -1,65 +1,46 @@
-function openExternal(url) {
-  window.open(url, "_blank", "noopener,noreferrer");
+let map, marker;
+
+function startApp() {
+  document.getElementById("welcome").style.display = "none";
+  document.getElementById("app").style.display = "block";
 }
 
-/* BASIC OSINT */
-function usernameOSINT() {
-  if (!username.value) return;
-  openExternal(`https://www.google.com/search?q="${username.value}"`);
+function showSection(id) {
+  document.querySelectorAll(".panel").forEach(p => p.classList.add("hidden"));
+  document.getElementById(id).classList.remove("hidden");
+
+  if (id === "geo" && !map) {
+    setTimeout(initMap, 200);
+  }
 }
 
-function emailOSINT() {
-  if (!email.value) return;
-  openExternal(`https://www.google.com/search?q="${email.value}"`);
+/* OSINT */
+function searchOSINT() {
+  const q = document.getElementById("query").value;
+  if (!q) return;
+  window.open(`https://www.google.com/search?q="${q}"`, "_blank");
 }
 
-function domainOSINT() {
-  if (!domain.value) return;
-  openExternal(`https://who.is/whois/${domain.value}`);
+/* MAP */
+function initMap() {
+  map = L.map("map").setView([20, 0], 2);
+  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
 }
 
-function ipOSINT() {
-  if (!ip.value) return;
-  openExternal(`https://ipinfo.io/${ip.value}`);
-}
+async function locateIP() {
+  const ip = document.getElementById("ip").value;
+  if (!ip) return;
 
-function imageOSINT() {
-  if (!image.value) return;
-  openExternal(`https://images.google.com/searchbyimage?image_url=${image.value}`);
-}
+  try {
+    const res = await fetch(`https://ipapi.co/${ip}/json/`);
+    const d = await res.json();
 
-/* VEHICLE */
-function vinOSINT() {
-  if (!vin.value) return;
-  openExternal(`https://vpic.nhtsa.dot.gov/decoder/Decoder?VIN=${vin.value}`);
-}
+    if (!d.latitude) return alert("Invalid IP");
 
-/* PHONE */
-function phoneOSINT() {
-  if (!phone.value) return;
-  openExternal(`https://www.google.com/search?q="${phone.value}"`);
+    if (marker) map.removeLayer(marker);
+    marker = L.marker([d.latitude, d.longitude]).addTo(map);
+    map.setView([d.latitude, d.longitude], 6);
+  } catch {
+    alert("Network error");
+  }
 }
-
-/* COMPANY */
-function companyOSINT() {
-  if (!company.value) return;
-  openExternal(`https://www.google.com/search?q="${company.value} company"`);
-}
-
-/* FLIGHT */
-function flightOSINT() {
-  if (!flight.value) return;
-  openExternal(`https://www.flightradar24.com/${flight.value}`);
-}
-
-/* SHIP */
-function shipOSINT() {
-  if (!ship.value) return;
-  openExternal(`https://www.marinetraffic.com/en/search?keyword=${ship.value}`);
-}
-
-/* PERSON */
-function personOSINT() {
-  if (!person.value) return;
-  openExternal(`https://www.google.com/search?q="${person.value}"`);
-} 
