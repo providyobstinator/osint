@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Obstinator World</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=1.0">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
+
 <body>
 
 <!-- WELCOME -->
 <div id="welcome">
-  <div class="welcome-box">
+  <div class="box">
     <h1>Welcome to <span>Obstinator World</span></h1>
-    <p>OSINT • Geo Intelligence • Analysis • Reporting</p>
+    <p>OSINT • Geo • Analysis</p>
     <button onclick="startApp()">Enter Platform</button>
   </div>
 </div>
@@ -24,121 +25,47 @@
 
 <header>
   <h2>🛡️ Obstinator World</h2>
-  <p class="subtitle">Open-Source Intelligence Platform</p>
+  <p>Minimal OSINT Dashboard (Stable)</p>
 </header>
 
 <nav>
-  <button onclick="show('dashboard')">Dashboard</button>
-  <button onclick="show('osint')">OSINT</button>
-  <button onclick="show('geo')">Geo</button>
-  <button onclick="show('analysis')">Analysis</button>
-  <button onclick="show('report')">Report</button>
+  <button onclick="showSection('osint')">OSINT</button>
+  <button onclick="showSection('geo')">Geo</button>
+  <button onclick="showSection('report')">Report</button>
 </nav>
 
-<!-- DASHBOARD -->
-<section id="dashboard" class="panel">
-  <h3>System Status</h3>
-  <ul>
-    <li>OSINT Modules: Active</li>
-    <li>Correlation Engine: Enabled</li>
-    <li>Timeline & Evidence: Enabled</li>
-    <li>Legal Mode: Public Data Only</li>
-  </ul>
-</section>
-
 <!-- OSINT -->
-<section id="osint" class="panel hidden">
-  <h3>OSINT Toolkit</h3>
+<section id="osint" class="panel">
+  <h3>OSINT Tools</h3>
 
-  <label>Username</label>
-  <input id="username">
-  <button onclick="usernameOSINT()">Investigate</button>
+  <input id="query" placeholder="Username / Email / Domain / Phone">
+  <button onclick="searchOSINT()">Search Public Sources</button>
 
-  <label>Email</label>
-  <input id="email">
-  <button onclick="emailOSINT()">Investigate</button>
-
-  <label>Domain</label>
-  <input id="domain">
-  <button onclick="domainOSINT()">Investigate</button>
-
-  <label>IP Address</label>
-  <input id="ip">
-  <button onclick="ipOSINT()">Investigate</button>
-
-  <label>Image URL</label>
-  <input id="image">
-  <button onclick="imageOSINT()">Reverse Image</button>
-
-  <h4>Vehicle OSINT</h4>
-  <input id="vin" placeholder="VIN">
-  <button onclick="vinOSINT()">Decode VIN</button>
-
-  <h4>Phone OSINT</h4>
-  <input id="phone">
-  <button onclick="phoneOSINT()">Analyze Phone</button>
-
-  <h4>Company OSINT</h4>
-  <input id="company">
-  <button onclick="companyOSINT()">Analyze Company</button>
-
-  <h4>Flight OSINT</h4>
-  <input id="flight">
-  <button onclick="flightOSINT()">Track Flight</button>
-
-  <h4>Ship OSINT</h4>
-  <input id="ship">
-  <button onclick="shipOSINT()">Track Ship</button>
-
-  <h4>Person OSINT</h4>
-  <input id="person">
-  <button onclick="personOSINT()">Search Person</button>
+  <p class="note">⚠️ Opens results in full browser (recommended)</p>
 </section>
 
 <!-- GEO -->
 <section id="geo" class="panel hidden">
-  <h3>Geospatial Intelligence</h3>
-  <input id="geoIP" placeholder="IP Address">
+  <h3>IP Geolocation</h3>
+  <input id="ip" placeholder="8.8.8.8">
   <button onclick="locateIP()">Locate</button>
   <div id="map"></div>
 </section>
 
-<!-- ANALYSIS -->
-<section id="analysis" class="panel hidden">
-  <h3>Case Analysis</h3>
-
-  <input id="caseId" placeholder="Case ID">
-  <button onclick="newCase()">Create / Load Case</button>
-
-  <h4>Correlation</h4>
-  <pre id="correlation"></pre>
-
-  <h4>Timeline</h4>
-  <input id="event">
-  <input id="eventSource" placeholder="Source">
-  <button onclick="addEvent()">Add Event</button>
-  <pre id="timeline"></pre>
-
-  <h4>Evidence</h4>
-  <input id="evidence">
-  <button onclick="addEvidence()">Add Evidence</button>
-  <pre id="evidenceList"></pre>
-</section>
-
 <!-- REPORT -->
 <section id="report" class="panel hidden">
-  <h3>Final Report</h3>
-  <button onclick="generateReport()">Generate Report</button>
-  <pre id="finalReport"></pre>
+  <h3>Notes / Report</h3>
+  <textarea id="notes" placeholder="Investigation notes..."></textarea>
 </section>
 
 <footer>
-  © 2025 Obstinator World • OSINT Platform
+  © 2025 Obstinator World • Public Data Only
 </footer>
 
 </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="script.js?v=1.0"></script>
 </body>
-</html>    
+</html>
+  
