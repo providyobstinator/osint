@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,7 +6,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
-
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,100 +14,126 @@
 <div id="welcome">
   <div class="welcome-box">
     <h1>Welcome to <span>Obstinator World</span></h1>
-    <p>OSINT • Geo Intelligence • Security • Reporting</p>
-    <button onclick="startPlatform()">Enter Platform</button>
+    <p>OSINT • Geo Intelligence • Analysis • Reporting</p>
+    <button onclick="startApp()">Enter Platform</button>
   </div>
 </div>
 
-<!-- PLATFORM -->
-<div id="platform">
+<!-- APP -->
+<div id="app">
 
 <header>
   <h2>🛡️ Obstinator World</h2>
-  <div class="subtitle">Public-Data Intelligence Platform</div>
+  <p class="subtitle">Open-Source Intelligence Platform</p>
 </header>
 
 <nav>
-  <button onclick="showSection('dashboard')">Dashboard</button>
-  <button onclick="showSection('osint')">OSINT</button>
-  <button onclick="showSection('geo')">Geo</button>
-  <button onclick="showSection('security')">Security</button>
-  <button onclick="showSection('reporting')">Reporting</button>
+  <button onclick="show('dashboard')">Dashboard</button>
+  <button onclick="show('osint')">OSINT</button>
+  <button onclick="show('geo')">Geo</button>
+  <button onclick="show('analysis')">Analysis</button>
+  <button onclick="show('report')">Report</button>
 </nav>
 
 <!-- DASHBOARD -->
 <section id="dashboard" class="panel">
-  <h3>Platform Overview</h3>
-  <ul class="stats">
-    <li>OSINT Modules: <b>Username, Email, Domain, IP, Image</b></li>
-    <li>Geo Intelligence: <b>IP Mapping</b></li>
-    <li>Reporting: <b>Case-based Investigation</b></li>
-    <li>Status: <b>Legal & Educational</b></li>
+  <h3>System Status</h3>
+  <ul>
+    <li>OSINT Modules: Active</li>
+    <li>Correlation Engine: Enabled</li>
+    <li>Timeline & Evidence: Enabled</li>
+    <li>Legal Mode: Public Data Only</li>
   </ul>
 </section>
 
 <!-- OSINT -->
 <section id="osint" class="panel hidden">
-  <h3>OSINT Investigation Toolkit</h3>
+  <h3>OSINT Toolkit</h3>
 
-  <label>Username Intelligence</label>
-  <input id="username" placeholder="username">
-  <button onclick="usernameOSINT()">Search Public Platforms</button>
+  <label>Username</label>
+  <input id="username">
+  <button onclick="usernameOSINT()">Investigate</button>
 
-  <label>Email Intelligence</label>
-  <input id="email" placeholder="email@example.com">
-  <button onclick="emailOSINT()">Search Email Footprint</button>
+  <label>Email</label>
+  <input id="email">
+  <button onclick="emailOSINT()">Investigate</button>
 
-  <label>Domain Intelligence</label>
-  <input id="domain" placeholder="example.com">
-  <button onclick="domainOSINT()">Analyze Domain</button>
+  <label>Domain</label>
+  <input id="domain">
+  <button onclick="domainOSINT()">Investigate</button>
 
-  <label>IP Intelligence</label>
-  <input id="ip" placeholder="8.8.8.8">
-  <button onclick="ipOSINT()">Analyze IP</button>
+  <label>IP Address</label>
+  <input id="ip">
+  <button onclick="ipOSINT()">Investigate</button>
 
-  <label>Image Intelligence</label>
-  <input id="imageUrl" placeholder="Image URL">
-  <button onclick="imageOSINT()">Reverse Image Search</button>
+  <label>Image URL</label>
+  <input id="image">
+  <button onclick="imageOSINT()">Reverse Image</button>
+
+  <h4>Vehicle OSINT</h4>
+  <input id="vin" placeholder="VIN">
+  <button onclick="vinOSINT()">Decode VIN</button>
+
+  <h4>Phone OSINT</h4>
+  <input id="phone">
+  <button onclick="phoneOSINT()">Analyze Phone</button>
+
+  <h4>Company OSINT</h4>
+  <input id="company">
+  <button onclick="companyOSINT()">Analyze Company</button>
+
+  <h4>Flight OSINT</h4>
+  <input id="flight">
+  <button onclick="flightOSINT()">Track Flight</button>
+
+  <h4>Ship OSINT</h4>
+  <input id="ship">
+  <button onclick="shipOSINT()">Track Ship</button>
+
+  <h4>Person OSINT</h4>
+  <input id="person">
+  <button onclick="personOSINT()">Search Person</button>
 </section>
 
 <!-- GEO -->
 <section id="geo" class="panel hidden">
   <h3>Geospatial Intelligence</h3>
-  <p>Approximate IP location (educational)</p>
-
-  <input id="geoIP" placeholder="IP address">
-  <button onclick="locateIP()">Locate on Map</button>
-
+  <input id="geoIP" placeholder="IP Address">
+  <button onclick="locateIP()">Locate</button>
   <div id="map"></div>
 </section>
 
-<!-- SECURITY -->
-<section id="security" class="panel hidden">
-  <h3>Security Analysis</h3>
-
-  <label>Password Strength</label>
-  <input id="password" type="password" placeholder="Enter password">
-  <p id="passResult"></p>
-
-  <label>Browser Security Awareness</label>
-  <button onclick="browserCheck()">Run Browser Check</button>
-  <pre id="browserResult"></pre>
-</section>
-
-<!-- REPORTING -->
-<section id="reporting" class="panel hidden">
-  <h3>Investigation Report Builder</h3>
+<!-- ANALYSIS -->
+<section id="analysis" class="panel hidden">
+  <h3>Case Analysis</h3>
 
   <input id="caseId" placeholder="Case ID">
-  <textarea id="notes" placeholder="Findings / Notes"></textarea>
+  <button onclick="newCase()">Create / Load Case</button>
 
+  <h4>Correlation</h4>
+  <pre id="correlation"></pre>
+
+  <h4>Timeline</h4>
+  <input id="event">
+  <input id="eventSource" placeholder="Source">
+  <button onclick="addEvent()">Add Event</button>
+  <pre id="timeline"></pre>
+
+  <h4>Evidence</h4>
+  <input id="evidence">
+  <button onclick="addEvidence()">Add Evidence</button>
+  <pre id="evidenceList"></pre>
+</section>
+
+<!-- REPORT -->
+<section id="report" class="panel hidden">
+  <h3>Final Report</h3>
   <button onclick="generateReport()">Generate Report</button>
   <pre id="finalReport"></pre>
 </section>
 
 <footer>
-  © 2025 Obstinator World • Public-Data Intelligence Platform
+  © 2025 Obstinator World • OSINT Platform
 </footer>
 
 </div>
@@ -116,4 +141,4 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
-</html>
+</html>    
