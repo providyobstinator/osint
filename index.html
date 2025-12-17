@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>Obstinator World</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,34 +15,35 @@
 <div id="welcome">
   <div class="welcome-box">
     <h1>Welcome to <span>Obstinator World</span></h1>
-    <p>Open-Source Intelligence & Security Analysis Platform</p>
+    <p>OSINT • Geo Intelligence • Security • Reporting</p>
     <button onclick="startPlatform()">Enter Platform</button>
   </div>
 </div>
 
 <!-- PLATFORM -->
-<div id="platform" class="hidden">
+<div id="platform">
 
 <header>
   <h2>🛡️ Obstinator World</h2>
-  <span class="subtitle">OSINT • Security • Investigation</span>
+  <div class="subtitle">Public-Data Intelligence Platform</div>
 </header>
 
 <nav>
   <button onclick="showSection('dashboard')">Dashboard</button>
   <button onclick="showSection('osint')">OSINT</button>
-  <button onclick="showSection('geo')">Geo Intelligence</button>
+  <button onclick="showSection('geo')">Geo</button>
   <button onclick="showSection('security')">Security</button>
   <button onclick="showSection('reporting')">Reporting</button>
 </nav>
 
 <!-- DASHBOARD -->
 <section id="dashboard" class="panel">
-  <h3>Intelligence Overview</h3>
+  <h3>Platform Overview</h3>
   <ul class="stats">
-    <li>Public Data Sources: <b>20+</b></li>
-    <li>Investigation Modules: <b>OSINT</b></li>
-    <li>Legal & Ethical: <b>Yes</b></li>
+    <li>OSINT Modules: <b>Username, Email, Domain, IP, Image</b></li>
+    <li>Geo Intelligence: <b>IP Mapping</b></li>
+    <li>Reporting: <b>Case-based Investigation</b></li>
+    <li>Status: <b>Legal & Educational</b></li>
   </ul>
 </section>
 
@@ -65,15 +66,19 @@
   <label>IP Intelligence</label>
   <input id="ip" placeholder="8.8.8.8">
   <button onclick="ipOSINT()">Analyze IP</button>
+
+  <label>Image Intelligence</label>
+  <input id="imageUrl" placeholder="Image URL">
+  <button onclick="imageOSINT()">Reverse Image Search</button>
 </section>
 
 <!-- GEO -->
 <section id="geo" class="panel hidden">
   <h3>Geospatial Intelligence</h3>
-  <p>Approximate IP geolocation (educational)</p>
+  <p>Approximate IP location (educational)</p>
 
   <input id="geoIP" placeholder="IP address">
-  <button onclick="locateIP()">Locate</button>
+  <button onclick="locateIP()">Locate on Map</button>
 
   <div id="map"></div>
 </section>
@@ -82,8 +87,8 @@
 <section id="security" class="panel hidden">
   <h3>Security Analysis</h3>
 
-  <label>Password Strength Analysis</label>
-  <input id="password" type="password" placeholder="Password">
+  <label>Password Strength</label>
+  <input id="password" type="password" placeholder="Enter password">
   <p id="passResult"></p>
 
   <label>Browser Security Awareness</label>
@@ -111,4 +116,4 @@
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 <script src="script.js"></script>
 </body>
-                                                        </html>
+</html>
