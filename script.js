@@ -1,80 +1,65 @@
- let map, marker;
-let caseData = { correlations: [], timeline: [], evidence: [] };
-
-function startApp() {
-  document.getElementById("welcome").classList.add("hidden");
-  document.getElementById("app").style.display = "block";
-  initMap();
+function openExternal(url) {
+  window.open(url, "_blank", "noopener,noreferrer");
 }
 
-function show(id) {
-  document.querySelectorAll(".panel").forEach(p => p.classList.add("hidden"));
-  document.getElementById(id).classList.remove("hidden");
+/* BASIC OSINT */
+function usernameOSINT() {
+  if (!username.value) return;
+  openExternal(`https://www.google.com/search?q="${username.value}"`);
 }
 
-function add(type, value) {
-  caseData.correlations.push(`${type}: ${value}`);
-  correlation.textContent = caseData.correlations.join("\n");
+function emailOSINT() {
+  if (!email.value) return;
+  openExternal(`https://www.google.com/search?q="${email.value}"`);
 }
 
-/* OSINT */
-function usernameOSINT(){ if(username.value) add("Username", username.value); }
-function emailOSINT(){ if(email.value) add("Email", email.value); }
-function domainOSINT(){ if(domain.value) add("Domain", domain.value); }
-function ipOSINT(){ if(ip.value) add("IP", ip.value); }
-function imageOSINT(){ window.open(`https://images.google.com/searchbyimage?image_url=${image.value}`); }
-function vinOSINT(){ window.open(`https://vpic.nhtsa.dot.gov/decoder/Decoder?VIN=${vin.value}`); }
-function phoneOSINT(){ window.open(`https://www.google.com/search?q="${phone.value}"`); }
-function companyOSINT(){ window.open(`https://www.google.com/search?q="${company.value} company"`); }
-function flightOSINT(){ window.open(`https://www.flightradar24.com/${flight.value}`); }
-function shipOSINT(){ window.open(`https://www.marinetraffic.com/en/search?keyword=${ship.value}`); }
-function personOSINT(){ window.open(`https://www.google.com/search?q="${person.value}"`); }
-
-/* CASE */
-function newCase() {
-  caseData = { correlations: [], timeline: [], evidence: [] };
-  correlation.textContent = timeline.textContent = evidenceList.textContent = "";
+function domainOSINT() {
+  if (!domain.value) return;
+  openExternal(`https://who.is/whois/${domain.value}`);
 }
 
-function addEvent() {
-  caseData.timeline.push(`${new Date().toLocaleDateString()} | ${event.value} | ${eventSource.value}`);
-  timeline.textContent = caseData.timeline.join("\n");
+function ipOSINT() {
+  if (!ip.value) return;
+  openExternal(`https://ipinfo.io/${ip.value}`);
 }
 
-function addEvidence() {
-  caseData.evidence.push(evidence.value);
-  evidenceList.textContent = caseData.evidence.join("\n");
+function imageOSINT() {
+  if (!image.value) return;
+  openExternal(`https://images.google.com/searchbyimage?image_url=${image.value}`);
 }
 
-/* MAP */
-function initMap() {
-  map = L.map("map").setView([20,0],2);
-  L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+/* VEHICLE */
+function vinOSINT() {
+  if (!vin.value) return;
+  openExternal(`https://vpic.nhtsa.dot.gov/decoder/Decoder?VIN=${vin.value}`);
 }
 
-async function locateIP() {
-  const res = await fetch(`https://ipapi.co/${geoIP.value}/json/`);
-  const d = await res.json();
-  if (!d.latitude) return;
-  if(marker) map.removeLayer(marker);
-  marker = L.marker([d.latitude,d.longitude]).addTo(map);
-  map.setView([d.latitude,d.longitude],6);
+/* PHONE */
+function phoneOSINT() {
+  if (!phone.value) return;
+  openExternal(`https://www.google.com/search?q="${phone.value}"`);
 }
 
-/* REPORT */
-function generateReport() {
-  finalReport.textContent =
-`CASE REPORT
-
-CORRELATION:
-${caseData.correlations.join("\n")}
-
-TIMELINE:
-${caseData.timeline.join("\n")}
-
-EVIDENCE:
-${caseData.evidence.join("\n")}
-
-DISCLAIMER:
-Public data only.`;
+/* COMPANY */
+function companyOSINT() {
+  if (!company.value) return;
+  openExternal(`https://www.google.com/search?q="${company.value} company"`);
 }
+
+/* FLIGHT */
+function flightOSINT() {
+  if (!flight.value) return;
+  openExternal(`https://www.flightradar24.com/${flight.value}`);
+}
+
+/* SHIP */
+function shipOSINT() {
+  if (!ship.value) return;
+  openExternal(`https://www.marinetraffic.com/en/search?keyword=${ship.value}`);
+}
+
+/* PERSON */
+function personOSINT() {
+  if (!person.value) return;
+  openExternal(`https://www.google.com/search?q="${person.value}"`);
+} 
